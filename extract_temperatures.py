@@ -51,6 +51,20 @@ def get_args():
                         type=str,
                         default='plot_temps_out')
 
+    parser.add_argument('-g',
+                        '--global_name',
+                        help='Output filename component for global thresholding results',
+                        metavar='global_name',
+                        type=str,
+                        default='global')
+
+    parser.add_argument('-i',
+                        '--individual_name',
+                        help='Output filename component for individual thresholding results',
+                        metavar='individual_name',
+                        type=str,
+                        default='individual')
+
     return parser.parse_args()
 
 
@@ -168,23 +182,23 @@ def main():
     }
 
     df = pd.DataFrame([results])
-    df.to_csv(os.path.join(args.outdir, args.date + '_global_thresholding_results.csv'), index=False)
-    print("Saved " + os.path.join(args.outdir, args.date + '_global_thresholding_results.png'))
+    df.to_csv(os.path.join(args.outdir, args.date + '_' + args.global_name + '_thresholding_results.csv'), index=False)
+    print("Saved " + os.path.join(args.outdir, args.date + '_' + args.global_name + '_thresholding_results.csv'))
 
     results_list = []
 
     for img_path in tif_files:
-        # Get Plot Name
-        plot_name = img_path.split('/')[-1].split('_')[0]
+        # Get Name
+        name = img_path.split('/')[-1].split('_')[0]
 
         # Get Temperature Values
         tif_img = tifi.imread(img_path)
         tif_img[tif_img == -10000.00] = np.nan
         tif_img[tif_img == 0.0] = np.nan
         img = tif_img[~np.isnan(tif_img)]
-        plot_pixels = img.flatten().tolist()
+        img_pixels = img.flatten().tolist()
 
-        pixel_vals = np.array(plot_pixels, dtype=np.float32).reshape(-1, 1)
+        pixel_vals = np.array(img_pixels, dtype=np.float32).reshape(-1, 1)
 
         plant_pixels = pixel_vals[pixel_vals < threshold_minima]
         soil_pixels = pixel_vals[pixel_vals > threshold_minima]
@@ -195,27 +209,27 @@ def main():
         # Output results
         results = {
             'date': args.date,
-            'plot': plot_name,
+            args.individual_name: name,
             'lon' : coords['lon'],
             'lat' : coords['lat'],
             'nw_lat' : coords['nw_lat'],
             'nw_lon' : coords['nw_lon'],
             'se_lat' : coords['se_lat'],
             'se_lon' : coords['se_lon'],
-            'plot_threshold_value': threshold_minima,
-            'plot_plant_temp': np.mean(plant_pixels),
-            'plot_soil_temp': np.mean(soil_pixels),
-            'plot_temp_diff': np.mean(soil_pixels) - np.mean(plant_pixels),
-            'plot_plant_temp_10': np.percentile(plant_pixels, 10),
-            'plot_plant_temp_33': np.percentile(plant_pixels, 33)
+            args.individual_name + '_threshold_value': threshold_minima,
+            args.individual_name + '_plant_temp': np.mean(plant_pixels),
+            args.individual_name + '_soil_temp': np.mean(soil_pixels),
+            args.individual_name + '_temp_diff': np.mean(soil_pixels) - np.mean(plant_pixels),
+            args.individual_name + '_plant_temp_10': np.percentile(plant_pixels, 10),
+            args.individual_name + '_plant_temp_33': np.percentile(plant_pixels, 33)
         }
 
         results_list.append(results)
 
     # Save all results to a single CSV
     df = pd.DataFrame(results_list)
-    df.to_csv(os.path.join(args.outdir, args.date + '_all_plot_thresholding_results.csv'), index=False)
-    print("Saved " + os.path.join(args.outdir, args.date + '_all_plot_thresholding_results.png'))
+    df.to_csv(os.path.join(args.outdir, args.date + '_' + args.individual_name + '_thresholding_results.csv'), index=False)
+    print("Saved " + os.path.join(args.outdir, args.date + '_' + args.individual_name + '_thresholding_results.csv'))
 
     # Randomly select up to 5 images
     selected_files = random.sample(tif_files, min(5, len(tif_files)))
