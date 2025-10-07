@@ -3,10 +3,10 @@ This script extracts temperatures of the plant canopy and soil from thermal imag
 1. Read in all pixel values from all images, discarding NaN and downsampling if necessary
 2. Use K-means clustering and separate the data into two clusters. Extract the cluster centers, select pixels between the centers, then compute the histogram and find local minimum.
 3. Define plant temp as values below the threshold and soil temp as values above the threshold. Return mean values for each, difference between the means, and percentiles for plants pixels.
-4. Save results of global threshold calculation to global_thresholding_results.
+4. Save results of global threshold calculation.
 5. For each image, use the threshold calculated to individually threshold each image.
 6. For each image, extract lat/lon.
-7. Save results of extraction to extraction_results.
+7. Save results of extraction.
 8. Randomly select 5 images and display original and thresholded pixels on the same scale. Save to PNG.
 
 ## Arguments
