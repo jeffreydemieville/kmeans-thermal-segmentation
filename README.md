@@ -1,4 +1,4 @@
-# flir_plot_temp
+# kmeans-thermal-segmentation
 This script extracts temperatures of the plant canopy and soil from thermal imagery. Order of operations includes:
 1. Read in all pixel values from all images, discarding NaN and downsampling if necessary
 2. Use K-means clustering and separate the data into two clusters. Extract the cluster centers, select pixels between the centers, then compute the histogram and find local minimum.
@@ -33,11 +33,11 @@ plotclip_orthos/0146_ortho.tif
 
 ## Building the Docker container
 ```
-docker build -t flir_plot_temp .
+docker build -t kmeans-thermal-segmentation .
 ```
 
 ## Running the Docker container
 ```
-docker run -v "$(pwd):/app" flir_plot_temp plotclip_orthos -d 2025-07-21__17-29-15-000_cotton -od plot_temps_out -g global -i plot
+docker run -v "$(pwd):/app" kmeans-thermal-segmentation plotclip_orthos -d 2025-07-21__17-29-15-000_cotton -od plot_temps_out -g global -i plot
 ```
-
+This assumes that plot-level clipped orthomosaic thermal imagery captured at 2025-07-21 17-29-15-000 on cotton is extracted to a directory plotclip_orthos. Outputs are stored in a directory plot_temps_out. Global thresholds are stored in ./plot_temps_out/2025-07-21__17-29-15-000_cotton_global_thresholding_results.csv. Plot-level results are stored in ./plot_temps_out/2025-07-21__17-29-15-000_cotton_plot_thresholding_results.csv. An image for quality control is saved in ./plot_temps_out/2025-07-21__17-29-15-000_cotton_thresholded_comparison_images.png.
