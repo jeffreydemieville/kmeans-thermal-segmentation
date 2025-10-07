@@ -38,6 +38,6 @@ docker build -t flir_plot_temp .
 
 ## Running the Docker container
 ```
-docker run -v "$(pwd):/app" flir_plot_temp plotclip_orthos -d 2025-07-21__17-29-15-000_cotton -od outputs
+docker run -v "$(pwd):/app" flir_plot_temp plotclip_orthos -d 2025-07-21__17-29-15-000_cotton -od plot_temps_out -g global -i plot
 ```
 
