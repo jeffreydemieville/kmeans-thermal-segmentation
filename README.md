@@ -13,8 +13,8 @@ This script extracts temperatures of the plant canopy and soil from thermal imag
 * dir: required, directory containing input geotiffs
 * -d/--date: required, used for naming outputs and including scan date in output CSVs
 * -od/--outdir: optional, used to set directory containing outputs, default='temps_out'
-* -g/--global: optional, used to set output filename component for global thresholding results, default='global'
-* -i/--individual: optional, used to set output filename component for individual thresholding results, default='individual'
+* -g/--global_name: optional, used to set output filename component for global thresholding results, default='global'
+* -i/--individual_name: optional, used to set output filename component for individual thresholding results, default='individual'
 
 ![Sample thresholding](/sample_thresholded_comparison_images.png)
 
