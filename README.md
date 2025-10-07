@@ -19,7 +19,17 @@ This script extracts temperatures of the plant canopy and soil from thermal imag
 ![Sample thresholding](/sample_thresholded_comparison_images.png)
 
 ## Prerequisites
-Extract thermal geotiff images to a known location.
+Extract thermal geotiff images to a known location. Script expects a directory containing tif images with a header preceding an underscore. 
+E.g.
+```
+plotclip_orthos/
+plotclip_orthos/0144_ortho.tif
+plotclip_orthos/0204_ortho.tif
+plotclip_orthos/0203_ortho.tif
+plotclip_orthos/0202_ortho.tif
+plotclip_orthos/0201_ortho.tif
+plotclip_orthos/0146_ortho.tif
+```
 
 ## Building the Docker container
 ```
