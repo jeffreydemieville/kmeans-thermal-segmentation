@@ -169,7 +169,7 @@ def main():
 
     df = pd.DataFrame([results])
     df.to_csv(os.path.join(args.outdir, args.date + '_global_thresholding_results.csv'), index=False)
-    print("Saved global_thresholding_results.")
+    print("Saved " + os.path.join(args.outdir, args.date + '_global_thresholding_results.png'))
 
     results_list = []
 
@@ -215,7 +215,7 @@ def main():
     # Save all results to a single CSV
     df = pd.DataFrame(results_list)
     df.to_csv(os.path.join(args.outdir, args.date + '_all_plot_thresholding_results.csv'), index=False)
-    print("Saved all_plot_thresholding_results.")
+    print("Saved " + os.path.join(args.outdir, args.date + '_all_plot_thresholding_results.png'))
 
     # Randomly select up to 5 images
     selected_files = random.sample(tif_files, min(5, len(tif_files)))
@@ -253,9 +253,9 @@ def main():
     plt.subplots_adjust(wspace=0.4, hspace=0.4)
     plt.savefig(os.path.join(args.outdir, args.date + '_thresholded_comparison_images.png'), dpi=300)
     plt.close()
-    print("Saved thresholded_comparison_images.")
+    print("Saved " + os.path.join(args.outdir, args.date + '_thresholded_comparison_images.png'))
 
-    print(f'Done, see outputs in ./{args.outdir}.')
+    print(f'Done, see outputs in {args.outdir}.')
 
 
 # --------------------------------------------------
