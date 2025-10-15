@@ -95,12 +95,16 @@ def get_latlon_bounds(image_path):
         latlon_coords = transform(crs, 'EPSG:4326', lon, lat)
 
         return {
-            'lon' : latlon_coords[0][4],
-            'lat' : latlon_coords[1][4],
-            'nw_lat' : latlon_coords[1][0],
-            'nw_lon' : latlon_coords[0][0],
-            'se_lat' : latlon_coords[1][3],
-            'se_lon' : latlon_coords[0][3],
+            'center_lon': latlon_coords[0][4],
+            'center_lat': latlon_coords[1][4],
+            'nw_lat': latlon_coords[1][0],
+            'nw_lon': latlon_coords[0][0],
+            'ne_lat': latlon_coords[1][1],
+            'ne_lon': latlon_coords[0][1],
+            'sw_lat': latlon_coords[1][2],
+            'sw_lon': latlon_coords[0][2],
+            'se_lat': latlon_coords[1][3],
+            'se_lon': latlon_coords[0][3],
         }
 
 
@@ -210,8 +214,12 @@ def main():
         results = {
             'date': args.date,
             args.individual_name: name,
-            'lon' : coords['lon'],
-            'lat' : coords['lat'],
+            'center_lat': coords['center_lat'],
+            'center_lon': coords['center_lon'],
+            'ne_lat': coords['ne_lat'],
+            'ne_lon': coords['ne_lon'],
+            'sw_lat': coords['sw_lat'],
+            'sw_lon': coords['sw_lon'],
             'nw_lat' : coords['nw_lat'],
             'nw_lon' : coords['nw_lon'],
             'se_lat' : coords['se_lat'],
